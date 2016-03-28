@@ -2,6 +2,13 @@ var recipes={};
 var recipes_json_path = "./data/recipes.json";
 var image_path = "./data/pics/";
 var image_suffix = ".png";
+var missing_image = "missing_image";
+
+function imgError(image) {
+    image.onerror = "";
+    image.src = image_path + missing_image + image_suffix;
+    return true;
+}
 
 function parseJson() {
     var request = new XMLHttpRequest();
@@ -24,7 +31,8 @@ function init() {
 	    }
 	}
     }
-    initItemList();
+    initItemDropdownList();
+    initItemBrowseList();
     //populate first item information
     selectItem();
 }
@@ -51,7 +59,7 @@ function decouple(rawIngredientString){
     }
 }
 
-function initItemList(){
+function initItemDropdownList(){
     var select = document.getElementById("items");
     for(var item in recipes)
     {
@@ -59,6 +67,18 @@ function initItemList(){
 	itemOption.text = itemOption.value = recipes[item].name;
 	select.add(itemOption);
     }
+}
+
+function initItemBrowseList(){
+    var img_elements = "";
+    for (var item in recipes)
+    {
+	var name = recipes[item].name;
+	var img_src = image_path + name + image_suffix;
+	var img_element = "<img src=\"" + img_src + "\" title=\"" + name + "\" onerror=\"imgError(this);\">";
+	img_elements = img_elements + img_element;
+    }
+    document.getElementById("list").innerHTML = img_elements;
 }
 
 function selectItem(){

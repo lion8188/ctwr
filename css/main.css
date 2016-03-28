@@ -42,3 +42,15 @@ img{
 #composition .compo img{
     margin-top : 12px;
 }
+
+#list {
+    width : auto;
+    min-width : 300px;
+}
+#list img {
+    height : auto;
+    width : auto;
+    max-width : 25px;
+    max-height : 25px;
+    margin : 3px;
+}
