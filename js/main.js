@@ -1,8 +1,11 @@
 var recipes={};
+var recipes_json_path = "./data/recipes.json";
+var image_path = "./data/pics/";
+var image_suffix = ".png";
 
 function parseJson() {
     var request = new XMLHttpRequest();
-    request.open("GET", "./data/recipes.json", false);
+    request.open("GET", recipes_json_path, false);
     request.send(null);
     return JSON.parse(request.responseText);
 }
@@ -21,6 +24,9 @@ function init() {
 	    }
 	}
     }
+    initItemList();
+    //populate first item information
+    selectItem();
 }
 
 function createItem(name,ingredients,craft_need) {
@@ -45,6 +51,52 @@ function decouple(rawIngredientString){
     }
 }
 
-function test2(){
-    document.getElementById("test").innerHTML = recipes["door_iron"].composition[8];
+function initItemList(){
+    var select = document.getElementById("items");
+    for(var item in recipes)
+    {
+	var itemOption = document.createElement("option");
+	itemOption.text = itemOption.value = recipes[item].name;
+	select.add(itemOption);
+    }
+}
+
+function selectItem(){
+    var select = document.getElementById("items");
+    var selectedItemKey = select[select.selectedIndex].value;
+    populateItem(selectedItemKey);
+}
+
+function populateItem(key){
+    var item = recipes[key];
+    var name = item.name;
+
+    //populate name
+    document.getElementById("name").innerHTML = name;
+
+    //populate icon
+    var img_element = document.getElementById("icon").children[0];
+    var img_path = image_path + name + image_suffix;
+    img_element.setAttribute("src", img_path);
+    img_element.setAttribute("alt", name);
+
+    //populate craft station
+    var craft_station = "none";
+    if (item.craft_need){
+        craft_station = item.craft_need;
+    }
+    document.getElementById("craft_station").innerHTML = "craft station: " + craft_station;
+
+    //populate composition
+    var compositionString = "";
+    for (var i = 0; i < 9; i++) {
+	var compositionItem = item.composition[i];
+	var img_compo = "";
+	if (compositionItem) {
+	    var img_path_compo = image_path + compositionItem + image_suffix;
+	    img_compo = "<img src=\"" + img_path_compo + "\" alt=\"" + compositionItem + "\" title=\"" + compositionItem + "\">";
+	}
+	compositionString = compositionString + "<div class=\"compo\">" + img_compo + "</div>";
+    }
+    document.getElementById("composition").innerHTML = compositionString;
 }

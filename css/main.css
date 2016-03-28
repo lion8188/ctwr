@@ -1,0 +1,44 @@
+.ct {
+    text-align : center;
+}
+
+#item {
+    width : 350px;
+}
+
+.basic {
+    clear : both;
+}
+
+#name {
+    font-weight:bold;
+    font-size:18px;
+}
+
+#icon {
+    height:50px;
+}
+
+img{
+    height : auto;
+    width : auto;
+    max-width : 50px;
+    max-height : 50px;
+}
+
+#composition {
+    width : 300px;
+}
+
+#composition .compo{
+    width : 76px;
+    height : 76px;
+    margin : 12px;
+    float : left;
+    text-align : center;
+    background-color : #8d8d8d;
+}
+
+#composition .compo img{
+    margin-top : 12px;
+}

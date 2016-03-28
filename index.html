@@ -4,13 +4,23 @@
     <title>Craft the world recipes</title>
     <script src="js/jquery-1.12.1.min.js"></script>
     <script src="js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
   </head>
-  <body>
+  <body onload="init()">
     <h1>Craft the word</h1>
     <div id="test"></div>
-    <script>
-      init();
-      test2();
-    </script>
+    <select id="items" onchange="selectItem()"></select>
+    <br>
+    <br>
+    <div id="item">
+      <div class="basic">
+	<div id="name"></div>
+	<div id="icon">
+	  <img src="" alt="" >
+	</div>
+      </div>
+      <div id="craft_station"></div>
+      <div id="composition"></div>
+    </div>
   </body>
 </html>
