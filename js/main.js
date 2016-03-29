@@ -75,7 +75,7 @@ function initItemBrowseList(){
     {
 	var name = recipes[item].name;
 	var img_src = image_path + name + image_suffix;
-	var img_element = "<img src=\"" + img_src + "\" title=\"" + name + "\" onerror=\"imgError(this);\">";
+	var img_element = "<img src=\"" + img_src + "\" title=\"" + name + "\" onerror=\"imgError(this);\" onclick=\"browseItem(this)\">";
 	img_elements = img_elements + img_element;
     }
     document.getElementById("list").innerHTML = img_elements;
@@ -85,6 +85,19 @@ function selectItem(){
     var select = document.getElementById("items");
     var selectedItemKey = select[select.selectedIndex].value;
     populateItem(selectedItemKey);
+}
+
+function browseItem(img){
+    var name = img.title;
+    var ddl = document.getElementById("items");
+    for (var i = 0; i < ddl.options.length; i++) {
+	if (ddl.options[i].value === name) {
+            ddl.selectedIndex = i;
+            break;
+	}
+    }
+    //trigger item selecting
+    selectItem();
 }
 
 function populateItem(key){
