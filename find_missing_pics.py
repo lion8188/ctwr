@@ -35,30 +35,18 @@ for commonImage in commonlist:
             imageObject = [commonImageName, x, y, w, h]
             image_dict[imageName] = imageObject
 
-#iterate item names of recipes.json, create image for them
+#iterate item names of recipes.json, find missing images
 with open(recipes_file) as recipes_file:
     recipes_data = json.load(recipes_file)
 print "items size:" , len(recipes_data["recipe"])
+
+f = open("missing_images.txt", "w")
+count = 0
 for recipe in recipes_data["recipe"]:
     item_name = recipe["name"]
     item_image = image_dict.get(item_name)
-    if item_image is not None:
-        print item_image
-        #create a new image
-        im = Image.open(raw_images_dir + "/" + item_image[0] + image_suffix)
-        x = int(item_image[1])
-        y = int(item_image[2])
-        w = int(item_image[3])
-        h = int(item_image[4])
-        icon = im.crop((x, y, x + w, y + h))
-        if icon is not None:
-            #newImage = Image.new(icon.mode, (w, h), "white")
-            #newImage.paste(icon)
-            #resize here
-            width, height = icon.size
-            if width > 50 or height > 50:
-                size = 50, 50
-                icon.thumbnail(size, Image.ANTIALIAS)
-            icon.save(new_images_dir + "/" + item_name + image_suffix)
-    else:
-        print "image not found:", item_name
+    if item_image is None:
+        f.write(item_name + "\n")
+        count = count + 1
+f.write("total missing images: %d" % count)
+f.close()

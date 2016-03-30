@@ -53,7 +53,7 @@ function decouple(rawIngredientString){
 	    var piece = rawIngredients[i].split("-");
 	    var item = piece[0];
 	    var position = piece[1];
-	    parts[position] = item;
+	    parts[position-1] = item;
 	}
 	return parts;
     }
